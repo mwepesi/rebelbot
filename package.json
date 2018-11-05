@@ -1,0 +1,21 @@
+{
+  "name": "rebelbot",
+  "version": "1.0.0",
+  "description": "Discord bot for the RA clan",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "nodemon dist/index.js",
+    "build": "./node_modules/typescript/bin/tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mwepesi",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.2",
+    "typescript": "^3.1.6"
+  }
+}
