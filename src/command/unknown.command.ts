@@ -11,7 +11,7 @@ export class Unknown extends Command {
     validateArgs = () => true;
 
     execute(): boolean {
-        this.sendError('Unknown command', `I don't know how to ${this.command}`);
+        this.sendError('Unknown command', `I don't know how to ${this.command}. Use help command to see which commands are supported.`);
         return false;
     }
 
