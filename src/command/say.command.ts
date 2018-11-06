@@ -13,5 +13,4 @@ export class Say extends Command {
         this.message.channel.send(this.args.join(' '));
         return true;
     }
-
 }

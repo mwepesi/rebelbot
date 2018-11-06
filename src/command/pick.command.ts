@@ -5,7 +5,7 @@ export class Pick extends Command {
 
     validateArgs(args: string[]) {
         if (args.length < 2) {
-            this.message.channel.send('Two or more arguments are required');
+            this.sendError('Invalid number of arguments', 'Two or more arguments are required');
             return false;
         }
 
@@ -19,5 +19,4 @@ export class Pick extends Command {
         this.message.channel.send(this.args[index]);
         return true;
     }
-
 }

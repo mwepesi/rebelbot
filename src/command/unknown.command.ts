@@ -11,7 +11,7 @@ export class Unknown extends Command {
     validateArgs = () => true;
 
     execute(): boolean {
-        this.message.channel.send(`I don't know how to ${this.command}`);
+        this.sendError('Unknown command', `I don't know how to ${this.command}`);
         return false;
     }
 

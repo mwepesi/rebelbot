@@ -16,5 +16,4 @@ export class Server extends Command {
         this.message.channel.send(clanEmbed);
         return true;
     }
-
 }

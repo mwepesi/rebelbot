@@ -19,14 +19,13 @@ export class Twa extends Command {
 
     validateArgs(args: string[]) {
         if (args.length < 1) {
-            this.message.channel.send(botconfig.twa.playerIdInfoMessage);
+            this.sendError('Missing argument', botconfig.twa.playerIdInfoMessage);
             return false;
         }
 
         // Check that the argument is a number
         if (!/\d/.test(args[0])) {
-            this.message.channel.send(`Entered player ID, ${args[0]}, is invalid.`);
-            this.message.channel.send(botconfig.twa.playerIdInfoMessage);
+            this.sendError(`Entered player ID, ${args[0]}, is invalid.`, botconfig.twa.playerIdInfoMessage);
             return false;
         }
 
@@ -51,12 +50,10 @@ export class Twa extends Command {
             console.log(`headers: ${JSON.stringify(resp.headers)}`);
     
             if (statusCode !== 200) {
-                let error = new Error('Request Failed.\n' + `Status Code: ${statusCode}`);
-                console.error(error.message);
+                console.error(`Error: Request failed with status code: ${statusCode}`);
                 this.message.react('👎');
-                this.message.channel.send(`Error: ${error.message}`);
-                // consume response data to free up memory
-                resp.resume();
+                this.sendError('Request failed', `Status code: ${statusCode}`);
+                resp.resume();  // consume response data to free up memory
                 return;
             }
     
@@ -91,12 +88,11 @@ export class Twa extends Command {
             console.log(`headers: ${JSON.stringify(resp.headers)}`);
     
             if (statusCode !== 200) {
-                let error = new Error('Request Failed.\n' + `Status Code: ${statusCode}`);
-                console.error(error.message);
+                console.error(`Error: Request failed with status code: ${statusCode}`);
                 this.message.react('👎');
-                this.message.channel.send(`Error: ${error.message}`);
-                // consume response data to free up memory
-                resp.resume();
+                this.sendError('Request failed', `Status code: ${statusCode}`);
+                resp.resume();  // consume response data to free up memory
+                return;
             }
     
             resp.pipe(gunzip);
@@ -109,7 +105,6 @@ export class Twa extends Command {
             // The whole response has been received. Print out the result.
             gunzip.on('end', () => {
                 let jsonResp = JSON.parse(data);
-                console.log(jsonResp);
                 let userIconUrl = this.message.author.displayAvatarURL;
                 let twaInfoEmbed = new RichEmbed()
                     .setDescription('TWA Profile Information')

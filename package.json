@@ -1,6 +1,6 @@
 {
   "name": "rebelbot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Discord bot for the RA clan",
   "main": "src/index.ts",
   "scripts": {
