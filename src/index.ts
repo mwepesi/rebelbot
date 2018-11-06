@@ -17,7 +17,7 @@ const bot = new Client({ disableEveryone: true });
 
 bot.on('ready', async () => {
     console.log(`${bot.user.username} is online!`);
-    bot.user.setActivity('out for the Rebellion!', { type: "WATCHING" });
+    bot.user.setActivity(botconfig.activityText, { type: "WATCHING" });
 });
 
 bot.on('message', async message => {

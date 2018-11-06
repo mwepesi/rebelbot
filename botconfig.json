@@ -1,3 +1,11 @@
 {
-    "prefix": "!"
+    "prefix": "!",
+    "activityText": "out for the Rebellion!",
+    "twa": {
+        "apiServer": "s3-eu-west-1.amazonaws.com",
+        "apiPort": 443,
+        "openIdEndpoint": "/live-usermap.twaservers.com/wgid/",
+        "profileInfoEndpoint": "/live-caprofile-profiles.twaservers.com/public/",
+        "playerIdInfoMessage": "Player's nine-digit wargaming ID is needed. Visit https://eu.wargaming.net/personal/ and check the __Access Control__ section for `https://eu.wargaming.net/id/123456789-PlayerName`. Player ID is the nine-digit number before the dash and player's name."
+    }
 }

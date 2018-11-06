@@ -4,15 +4,13 @@ import { createGunzip } from 'zlib';
 
 import { Command } from './command';
 
+const botconfig = require('../../botconfig.json');
+
 const options: RequestOptions = {
-    hostname: 's3-eu-west-1.amazonaws.com',
-    port: 443,
+    hostname: botconfig.twa.apiServer,
+    port: botconfig.twa.apiPort,
     method: 'GET'
 }
-
-const playerIdInfoMessage = "Player's nine-digit wargaming ID is needed. Visit https://eu.wargaming.net/personal/ " +
-    "and check the __Access Control__ section for `https://eu.wargaming.net/id/123456789-PlayerName`. Player " +
-    "ID is the nine-digit number before the dash and player's name.";
 
 export class Twa extends Command {
 
@@ -21,14 +19,14 @@ export class Twa extends Command {
 
     validateArgs(args: string[]) {
         if (args.length < 1) {
-            this.message.channel.send(playerIdInfoMessage);
+            this.message.channel.send(botconfig.twa.playerIdInfoMessage);
             return false;
         }
 
         // Check that the argument is a number
         if (!/\d/.test(args[0])) {
             this.message.channel.send(`Entered player ID, ${args[0]}, is invalid.`);
-            this.message.channel.send(playerIdInfoMessage);
+            this.message.channel.send(botconfig.twa.playerIdInfoMessage);
             return false;
         }
 
@@ -44,7 +42,7 @@ export class Twa extends Command {
 
     fetchOpenId() {
         this.message.channel.send(`Fetching open id for player ${this.playerId}`);
-        options.path = `/live-usermap.twaservers.com/wgid/${this.playerId}`;
+        options.path = botconfig.twa.openIdEndpoint + this.playerId;
         get(options, (resp) => {
             const { statusCode } = resp;
             let gunzip = createGunzip();
@@ -84,7 +82,7 @@ export class Twa extends Command {
     };
     
     fetchTwaProfileData() {
-        options.path = `/live-caprofile-profiles.twaservers.com/public/${this.playerOpenId}.json`;
+        options.path = botconfig.twa.profileInfoEndpoint + `${this.playerOpenId}.json`;
         get(options, (resp) => {
             let gunzip = createGunzip();
             let data = '';
