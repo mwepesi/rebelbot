@@ -1,3 +1,5 @@
+import { RichEmbed } from 'discord.js';
+
 import { Command } from './command';
 
 export class Pick extends Command {
@@ -16,7 +18,10 @@ export class Pick extends Command {
 
     execute(): boolean {
         let index = Math.floor(Math.random() * this.args.length);
-        this.message.channel.send(this.args[index]);
+        let richEmbed = new RichEmbed()
+            .setColor('#15ff55')
+            .addField('Randomly picked', this.args[index]);
+        this.message.channel.send(richEmbed);
         return true;
     }
 }
