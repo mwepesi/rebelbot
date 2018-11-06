@@ -1,5 +1,6 @@
-import { Command } from './command';
 import { RichEmbed } from 'discord.js';
+
+import { Command } from './command';
 
 export class Random extends Command {
     min: number;
@@ -35,7 +36,7 @@ export class Random extends Command {
     execute(): boolean {
         let richEmbed = new RichEmbed()
             .setColor('#15ff55')
-            .addField('Randomly generated', Math.floor(Math.random() * Math.floor(this.max - this.min + 1)) + this.min);
+            .addField(Math.floor(Math.random() * Math.floor(this.max - this.min + 1)) + this.min, '🎲');
         this.message.channel.send(richEmbed);
         return true;
     }

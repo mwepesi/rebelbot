@@ -1,3 +1,5 @@
+import { RichEmbed } from 'discord.js';
+
 import { Command } from './command';
 
 export class Say extends Command {
@@ -10,7 +12,10 @@ export class Say extends Command {
     };
 
     execute(): boolean {
-        this.message.channel.send(this.args.join(' '));
+        let richEmbed = new RichEmbed()
+            .setColor('#15ff55')
+            .addField(this.args.join(' '), '📣');
+        this.message.channel.send(richEmbed);
         return true;
     }
 }

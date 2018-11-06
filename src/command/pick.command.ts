@@ -20,7 +20,7 @@ export class Pick extends Command {
         let index = Math.floor(Math.random() * this.args.length);
         let richEmbed = new RichEmbed()
             .setColor('#15ff55')
-            .addField('Randomly picked', this.args[index]);
+            .addField(this.args[index], '🎲');
         this.message.channel.send(richEmbed);
         return true;
     }
