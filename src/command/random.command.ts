@@ -15,8 +15,8 @@ export class Random extends Command {
             this.sendError('Unexpected number of arguments',
                 'Use command with two arguments to specify minimum and maximum values in range or no arguments to use default range (0-100)');
             return false;
-        } else if (!/\d/.test(args[0]) || !/\d/.test(args[1])) {
-            this.sendError('Invalid arguments', 'Arguments must be numeric');
+        } else if (!args[0].match(/^[0-9]+$/) || !args[1].match(/^[0-9]+$/)) {
+            this.sendError('Invalid arguments', 'Arguments must be integers');
             return false;
         } else {
             this.min = +args[0];
