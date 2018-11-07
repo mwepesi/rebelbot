@@ -1,5 +1,21 @@
 # rebelbot
-Discord bot developed for TWA players
+Discord bot developed for TWA players.
+
+
+# Dependencies
+
+## Production
+The following must be installed in order to run rebelbot:
+
+ * Node
+ * npm
+
+## Development
+The following development dependencies exist for rebelbot:
+
+ * nodemon
+   * install with npm using: `npm install -g nodemon`
+
 
 # auth.json
 Add an auth.json file; it should contain authentication token for the bot.  See sample below:
