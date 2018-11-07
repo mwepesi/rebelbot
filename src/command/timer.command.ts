@@ -20,8 +20,8 @@ export class Timer extends Command {
             this.sendError('Unexpected number of arguments',
                 'Use command with one argument to specify the number of seconds to count down from');
             return false;
-        } else if (!/\d/.test(args[0])) {
-            this.sendError('Invalid argument', 'Argument must be numeric');
+        } else if (!args[0].match(/^[0-9]+$/)) {
+            this.sendError('Invalid argument', 'Argument must be an integer');
             return false;
         } else {
             this.millis = +args[0] * 1000;
