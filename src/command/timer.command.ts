@@ -1,6 +1,10 @@
+import { RichEmbed, Message } from 'discord.js';
+
 import { Command } from './command';
 
+const ONE_DAY_MILLIS = 24 * 60 * 60 * 1000;
 const ONE_HOUR_MILLIS = 60 * 60 * 1000;
+const ONE_MINUTE_MILLIS = 60 * 1000;
 
 export class Timer extends Command {
     millis: number;
@@ -31,36 +35,56 @@ export class Timer extends Command {
     };
 
     execute(): boolean {
-        this.countdownTime = new Date().getTime() + this.millis;
+        let now = new Date().getTime();
+        this.countdownTime = now + this.millis;
 
-        this.interval = setInterval(() => {
-            // Get todays date and time
-            let now = new Date().getTime();
+        let richEmbed = new RichEmbed()
+            .setColor('#15ff55')
+            .addField(Timer.generateRemainingTime(this.millis), '⏱');
 
-            // Find the distance between now and the count down date
-            let distance = Math.floor((this.countdownTime - now) / 1000);
+        let lastUpdate = now;
 
-            if (distance === 3600) {
-                this.message.channel.send('One hour remaining');
-            } else if (distance === 600) {
-                this.message.channel.send('Ten minutes remaining');
-            } else if (distance === 120) {
-                this.message.channel.send('Two minutes remaining');
-            } else if (distance === 60) {
-                this.message.channel.send('One minute remaining');
-            } else if (distance === 30) {
-                this.message.channel.send('Thirty seconds remaining');
-            } else if (distance === 10) {
-                this.message.channel.send('Ten seconds remaining');
-            }
+        this.message.channel.send(richEmbed).then((msg: Message) => {
+            this.interval = setInterval(() => {
+                // Get todays date and time
+                let now = new Date().getTime();
 
-            // If the count down is finished, write some text 
-            if (distance <= 0) {
-                clearInterval(this.interval);
-                this.message.channel.send('Timer has expired');
-            }
-        }, 1000);
+                // Find the distance between now and the count down date
+                let distance = this.countdownTime - now;
+
+                // If the count down is finished, change display and exit
+                if (distance <= 0) {
+                    richEmbed = new RichEmbed()
+                        .setColor('#e5280b')
+                        .addField('Timer has expired!', '⏱');
+
+                    msg.edit(richEmbed);
+
+                    clearInterval(this.interval);
+
+                    return;
+                }
+
+                // Wait five seconds for update in order not to impact performance
+                if (now - lastUpdate > 5000) {
+                    richEmbed = new RichEmbed()
+                        .setColor('#15ff55')
+                        .addField(Timer.generateRemainingTime(distance), '⏱');
+                    msg.edit(richEmbed);
+
+                    lastUpdate = now;
+                }
+            }, 1000);
+        });
         return true;
     }
 
+    private static generateRemainingTime(distance: number): string {
+        // Time calculations for hours, minutes and seconds
+        let hours = Math.floor((distance % ONE_DAY_MILLIS) / ONE_HOUR_MILLIS);
+        let minutes = Math.floor((distance % ONE_HOUR_MILLIS) / ONE_MINUTE_MILLIS);
+        let seconds = Math.floor((distance % ONE_MINUTE_MILLIS) / 1000);
+
+        return hours + "h " + minutes + "m " + seconds + "s";
+    }
 }
