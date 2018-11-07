@@ -105,6 +105,7 @@ export class Twa extends Command {
             // The whole response has been received. Print out the result.
             gunzip.on('end', () => {
                 let jsonResp = JSON.parse(data);
+                // console.log(jsonResp);
                 let userIconUrl = this.message.author.displayAvatarURL;
                 let twaInfoEmbed = new RichEmbed()
                     .setDescription('TWA Profile Information')
