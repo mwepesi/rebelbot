@@ -2,13 +2,15 @@ import { RichEmbed } from "discord.js";
 
 import { Command } from './command';
 
+const pkg = require('../../package.json');
+
 export class Help extends Command {
 
     validateArgs = () => true;
 
     execute(): boolean {
         let helpEmbed = new RichEmbed()
-            .setDescription('Bot Commands')
+            .setDescription(`Bot Commands v${pkg.version}`)
             .setColor('#15ff55')
             .setThumbnail(this.bot.user.displayAvatarURL)
             .addField('server', 'display discord server information')

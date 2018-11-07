@@ -1,7 +1,7 @@
 {
   "name": "rebelbot",
-  "version": "1.0.1",
-  "description": "Discord bot for the RA clan",
+  "version": "1.1.0",
+  "description": "Discord bot for The Rebel Alliance clan",
   "main": "src/index.ts",
   "scripts": {
     "start": "nodemon dist/index.js",
